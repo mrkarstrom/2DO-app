@@ -20,3 +20,58 @@ document.getElementById('item').addEventListener('keydown', function (e) {
     }
 });
 
+function addItem(value) {
+    addItemToDOM(value);
+    document.getElementById('item').value = '';
+
+    data.todo.push(value);
+    dataObjectUpdated();
+}
+
+function renderTodoList() {
+    if (!data.todo.length && !data.completed.length) return;
+
+    for (let i= 0; i < data.todo.length; i++) {
+        let value = data.todo[i];
+        addItemToDOM(value);
+    }
+
+    for(let j = 0; j < data.completed.length; j++) {
+        let value = data.completed[j];
+        addItemToDOM(value, true);
+    } 
+}
+
+function dataObjectUpdated() {
+    localStorage.setItem('todoList', JSON.stringify(data));
+}
+
+function removeItem() {
+    let item = this.parentNode.parentNode;
+    let parent = item.parentNode;
+    let id = parent.id;
+    let value = item.innerText;
+
+    if(id === 'todo') {
+        data.todo.splice(data.todo.indexOf(value),1);
+    } else {
+        data.completed.splice(data.todo.indexOf(value),1);
+    }
+    dataObjectUpdated();
+
+    parent.removeChild(item);
+}
+
+function completeItem() {
+    let item = this.parentNode.parentNode;
+    let parent = item.parentNode;
+    let id = parent.id;
+    let value = item.innerText;
+
+    if (id === 'todo') {
+        data.todo.splice(data.todo.indexOf(value),1);
+        data.completed.push(value);
+    } else {
+        
+    }
+}
