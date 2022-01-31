@@ -72,6 +72,25 @@ function completeItem() {
         data.todo.splice(data.todo.indexOf(value),1);
         data.completed.push(value);
     } else {
-        
+        data.completed.splice(data.completed.indexOf(value),1);
+        data.todo.push(value);
     }
+
+    dataObjectUpdated();
+
+    let target = (id === 'todo') ? document.getElementById('completed'):document.getElementById('todo');
+    parent.removeChild('item');
+    target.insertBefore(item, target.childNodes[0]);
+}
+
+function addItemToDOM(text, completed) {
+    let list = (completed) ? document.getElementById('completed'):document.getElementById('todo');
+
+    let item = document.createElement('li');
+    item.innerText = text;
+
+    let buttons = document.createElement('div');
+    buttons.classList.add('buttons');
+
+    
 }
